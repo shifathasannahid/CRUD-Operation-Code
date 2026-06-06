@@ -1,0 +1,115 @@
+﻿@model IEnumerable<ADO_Examples.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1> <br />
+
+@if (TempData["InfoMessage"] != null)
+{
+   
+    <div class="alert alert-info alert-dismissible fade show" id="infoAlert">
+         <strong>Information :</strong> @TempData["InfoMessage"]
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+         setTimeout(function () {
+          document.getElementById("infoAlert").style.display = "none";
+           }, 4000);
+    </script>
+
+}
+
+else if (TempData["SuccessMessage"] != null)
+{
+
+    <div class="alert alert-info alert-dismissible fade show" id="infoAlert">
+        <strong>Success !</strong> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+        setTimeout(function () {
+         document.getElementById("infoAlert").style.display = "none";
+          }, 5000);
+    </script>
+
+}
+
+else if (TempData["ErrorMessage"] != null)
+{
+
+    <div class="alert alert-danger alert-dismissible fade show" id="infoAlert">
+        <strong>Error !</strong> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+        setTimeout(function () {
+         document.getElementById("infoAlert").style.display = "none";
+          }, 5000);
+    </script>
+
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @* <th>
+                @Html.DisplayNameFor(model => model.ProductID)
+            </th> *@
+
+            
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           @*  <td>
+                @Html.DisplayFor(modelItem => item.ProductID)
+            </td> *@
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-primary">Edit </a> &nbsp;&nbsp;&nbsp;
+                <a asp-action="Edit" class="btn btn-success">Details </a> &nbsp;&nbsp;&nbsp;
+                <a asp-action="Edit" class="btn btn-danger">Delete </a>
+
+
+                @* @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
