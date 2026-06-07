@@ -25,7 +25,23 @@ namespace ADO_Examples.Controllers
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                var product = _productDAL.GetProductByID(id).FirstOrDefault();
+                if (product == null)
+                {
+                    TempData["InfoMessage"] = "Product not available in ID " + id.ToString();
+                    return RedirectToAction("Index");
+                }
+                return View(product);
+            }
+            catch (Exception ex)
+            {
+
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+
+            }
         }
 
         // GET: ProductController/Create
@@ -35,7 +51,7 @@ namespace ADO_Examples.Controllers
         }
 
         // POST: ProductController/Create
-        [HttpPost]
+        [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection, Product product)
         {
@@ -72,43 +88,100 @@ namespace ADO_Examples.Controllers
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var products = _productDAL.GetProductByID(id).FirstOrDefault();
+            if (products == null)
+            {
+                TempData["InfoMessage"] = "Product not available in ID " + id.ToString();
+                return RedirectToAction("Index");
+            }
+            return View(products);
         }
 
         // POST: ProductController/Edit/5
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult UpdateProduct(Product product)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    bool IsUpdated = _productDAL.UpdateProduct(product);
+
+                    if (IsUpdated)
+                    {
+                        TempData["SuccessMessage"] = "Product details Update Successfully....!";
+                    }
+
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Product is already available / Unable to update the product detail";
+                    }
+                }
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+
+                TempData["ErrorMessage"] = ex.Message;
                 return View();
+
             }
+
+
         }
 
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                var product = _productDAL.GetProductByID(id).FirstOrDefault();
+                if (product == null)
+                {
+                    TempData["InfoMessage"] = "Product not available in ID " + id.ToString();
+                    return RedirectToAction("Index");
+
+                }
+                return View(product);
+            }
+            catch (Exception ex)
+            {
+
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+
+            }
         }
 
         // POST: ProductController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmation(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                string result = _productDAL.DeleteProduct(id);
+
+                if (result.Contains("deleted"))
+                {
+                    TempData["SuccessMessage"] = result;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = result;
+                }
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+
+                TempData["ErrorMessage"] = ex.Message;
                 return View();
+
             }
+
         }
+        
     }
 }

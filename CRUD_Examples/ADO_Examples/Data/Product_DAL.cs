@@ -8,14 +8,15 @@ namespace ADO_Examples.Data
     public class Product_DAL
     {
         string conString = @"Data Source=DESKTOP-5BNTOH9\SQLEXPRESS;Initial Catalog=ADO_EXAMPLE;Integrated Security=SSPI;Encrypt=True;TrustServerCertificate=True";
-        
+
         //Get All Products
 
         public List<Product> GetProducts()
         {
             List<Product> productsList = new List<Product>();
-            
-            using (SqlConnection connection = new SqlConnection(conString)) {
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "sp_GetProducts";
@@ -30,27 +31,27 @@ namespace ADO_Examples.Data
                 {
                     productsList.Add(new Product
                     {
-                        //ProductID = Convert.ToInt32(dr["ProductID"]),
+                        ProductID = Convert.ToInt32(dr["ProductID"]),
                         ProductName = dr["ProductName"].ToString(),
                         Price = Convert.ToDecimal(dr["Price"]),
                         Qty = Convert.ToInt32(dr["Qty"]),
                         Remarks = Convert.ToString(dr["Remarks"])
 
-                    
+
                     });
 
-                    
+
                 }
 
             }
             return productsList;
         }
 
-        //Insert Product
 
+        //Insert Product
         public bool InsertProduct(Product product)
         {
-           int id = 0;
+            int id = 0;
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
@@ -60,13 +61,13 @@ namespace ADO_Examples.Data
                 command.Parameters.AddWithValue("@price", product.Price);
                 command.Parameters.AddWithValue("@Qty", product.Qty);
                 command.Parameters.AddWithValue("@Remarks", product.Remarks);
-                
+
                 connection.Open();
                 id = command.ExecuteNonQuery();
                 connection.Close();
 
             }
-            if(id > 0)
+            if (id > 0)
             {
                 return true;
             }
@@ -74,8 +75,102 @@ namespace ADO_Examples.Data
             {
                 return false;
             }
-                
+
         }
 
+
+        //Get Products by   product Id
+
+        public List<Product> GetProductByID(int ProductID)
+        {
+            List<Product> productsList = new List<Product>();
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                SqlCommand command = connection.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "sp_GetProductByID";
+                command.Parameters.AddWithValue("@ProductID", ProductID);
+                SqlDataAdapter sqlDA = new SqlDataAdapter(command);
+                DataTable dtProducts = new DataTable();
+
+                connection.Open();
+                sqlDA.Fill(dtProducts);
+                connection.Close();
+
+                foreach (DataRow dr in dtProducts.Rows)
+                {
+                    productsList.Add(new Product
+                    {
+                        ProductID = Convert.ToInt32(dr["ProductID"]),
+                        ProductName = dr["ProductName"].ToString(),
+                        Price = Convert.ToDecimal(dr["Price"]),
+                        Qty = Convert.ToInt32(dr["Qty"]),
+                        Remarks = Convert.ToString(dr["Remarks"])
+
+
+                    });
+
+
+                }
+
+            }
+            return productsList;
+        }
+
+        //Update Product
+        public bool UpdateProduct(Product product)
+        {
+            int i = 0;
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                SqlCommand command = new SqlCommand("sp_UpdateProducts", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ProductID", product.ProductID);
+                command.Parameters.AddWithValue("@ProductName", product.ProductName);
+                command.Parameters.AddWithValue("@price", product.Price);
+                command.Parameters.AddWithValue("@Qty", product.Qty);
+                command.Parameters.AddWithValue("@Remarks", product.Remarks);
+
+                connection.Open();
+                i = command.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            if (i > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        //Delete product
+
+        public string DeleteProduct(int productid)
+        {
+            string result = "";
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+
+                SqlCommand command = new SqlCommand("sp_DELETEPRODUCT", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@PRODUCTID", productid);
+                command.Parameters.Add("@OUTPUTMESSAGE", SqlDbType.VarChar,50).Direction = ParameterDirection.Output;
+                
+                connection.Open();
+                command.ExecuteNonQuery();
+                result = command.Parameters["@OUTPUTMESSAGE"].Value.ToString();
+                connection.Close();
+
+            }
+            return result;
+            
+
+        }
     }
 }
