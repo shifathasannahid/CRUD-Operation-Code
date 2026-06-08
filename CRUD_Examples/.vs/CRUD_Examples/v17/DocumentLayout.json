@@ -1,12 +1,122 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|c:\\training_shifat\\crud-operation-code\\crud_examples\\ado_examples\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|solutionrelative:ado_examples\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|c:\\training_shifat\\crud-operation-code\\crud_examples\\ado_examples\\data\\product_dal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|solutionrelative:ado_examples\\data\\product_dal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|c:\\training_shifat\\crud-operation-code\\crud_examples\\ado_examples\\views\\product\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|solutionrelative:ado_examples\\views\\product\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|c:\\training_shifat\\crud-operation-code\\crud_examples\\ado_examples\\views\\product\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|solutionrelative:ado_examples\\views\\product\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|c:\\training_shifat\\crud-operation-code\\crud_examples\\ado_examples\\views\\product\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|solutionrelative:ado_examples\\views\\product\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|c:\\training_shifat\\crud-operation-code\\crud_examples\\ado_examples\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0DF29A07-366F-49C1-AB9D-4E2B67812D50}|ADO_Examples\\ADO_Examples.csproj|solutionrelative:ado_examples\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "ADO_Examples\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Controllers\\ProductController.cs*",
+              "RelativeToolTip": "ADO_Examples\\Controllers\\ProductController.cs*",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAkwHAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T04:40:30.963Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Delete.cshtml",
+              "RelativeDocumentMoniker": "ADO_Examples\\Views\\Product\\Delete.cshtml",
+              "ToolTip": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Delete.cshtml",
+              "RelativeToolTip": "ADO_Examples\\Views\\Product\\Delete.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-08T08:50:54.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Details.cshtml",
+              "RelativeDocumentMoniker": "ADO_Examples\\Views\\Product\\Details.cshtml",
+              "ToolTip": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Details.cshtml",
+              "RelativeToolTip": "ADO_Examples\\Views\\Product\\Details.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABIAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-08T09:20:15.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Edit.cshtml",
+              "RelativeDocumentMoniker": "ADO_Examples\\Views\\Product\\Edit.cshtml",
+              "ToolTip": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Edit.cshtml",
+              "RelativeToolTip": "ADO_Examples\\Views\\Product\\Edit.cshtml",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAAADoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-08T04:40:17.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Product_DAL.cs",
+              "DocumentMoniker": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Data\\Product_DAL.cs",
+              "RelativeDocumentMoniker": "ADO_Examples\\Data\\Product_DAL.cs",
+              "ToolTip": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Data\\Product_DAL.cs*",
+              "RelativeToolTip": "ADO_Examples\\Data\\Product_DAL.cs*",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAkwG0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T05:08:15.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Index.cshtml",
+              "RelativeDocumentMoniker": "ADO_Examples\\Views\\Product\\Index.cshtml",
+              "ToolTip": "C:\\Training_Shifat\\CRUD-Operation-Code\\CRUD_Examples\\ADO_Examples\\Views\\Product\\Index.cshtml",
+              "RelativeToolTip": "ADO_Examples\\Views\\Product\\Index.cshtml",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAGkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-08T04:30:08.586Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
