@@ -100,10 +100,10 @@ else if (TempData["ErrorMessage"] != null)
                 @Html.DisplayFor(modelItem => item.Remarks)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductID" class="btn btn-warning">Edit </a> &nbsp;&nbsp;&nbsp;
+                @* <a asp-action="Edit" asp-route-id="@item.ProductID" class="btn btn-warning">Edit </a> &nbsp;&nbsp;&nbsp; *@
                 <a asp-action="Details" asp-route-id="@item.ProductID" class="btn btn-success">Details </a> &nbsp;&nbsp;&nbsp;
                 
-                 <a asp-action="Delete" asp-route-id="@item.ProductID" class="btn btn-danger">Delete </a>
+                @*  <a asp-action="Delete" asp-route-id="@item.ProductID" class="btn btn-danger">Delete </a> *@
              
 
 

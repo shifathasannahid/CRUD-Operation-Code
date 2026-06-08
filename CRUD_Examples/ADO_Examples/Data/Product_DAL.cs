@@ -1,176 +1,110 @@
-﻿using System.Data.SqlClient;
-using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using ADO_Examples.Models;
 using Microsoft.Data.SqlClient;
+using ADO_Examples.Models;
+
 namespace ADO_Examples.Data
 {
     public class Product_DAL
     {
         string conString = @"Data Source=DESKTOP-5BNTOH9\SQLEXPRESS;Initial Catalog=ADO_EXAMPLE;Integrated Security=SSPI;Encrypt=True;TrustServerCertificate=True";
 
-        //Get All Products
-
+        // =========================
+        // GET ALL PRODUCTS
+        // =========================
         public List<Product> GetProducts()
         {
-            List<Product> productsList = new List<Product>();
+            List<Product> list = new List<Product>();
 
-            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "sp_GetProducts";
-                SqlDataAdapter sqlDA = new SqlDataAdapter(command);
-                DataTable dtProducts = new DataTable();
+                SqlCommand cmd = new SqlCommand("sp_GetProducts", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                connection.Open();
-                sqlDA.Fill(dtProducts);
-                connection.Close();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
 
-                foreach (DataRow dr in dtProducts.Rows)
+                con.Open();
+                da.Fill(dt);
+                con.Close();
+
+                foreach (DataRow dr in dt.Rows)
                 {
-                    productsList.Add(new Product
+                    list.Add(new Product
                     {
                         ProductID = Convert.ToInt32(dr["ProductID"]),
                         ProductName = dr["ProductName"].ToString(),
                         Price = Convert.ToDecimal(dr["Price"]),
                         Qty = Convert.ToInt32(dr["Qty"]),
-                        Remarks = Convert.ToString(dr["Remarks"])
-
-
+                        Remarks = dr["Remarks"].ToString()
                     });
-
-
                 }
-
             }
-            return productsList;
+
+            return list;
         }
 
-
-        //Insert Product
-        public bool InsertProduct(Product product)
+        // =========================
+        // GET BY ID
+        // =========================
+        public List<Product> GetProductByID(int id)
         {
-            int id = 0;
+            List<Product> list = new List<Product>();
 
-            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand command = new SqlCommand("sp_InsertProducts", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@ProductName", product.ProductName);
-                command.Parameters.AddWithValue("@price", product.Price);
-                command.Parameters.AddWithValue("@Qty", product.Qty);
-                command.Parameters.AddWithValue("@Remarks", product.Remarks);
+                SqlCommand cmd = new SqlCommand("sp_GetProductByID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                connection.Open();
-                id = command.ExecuteNonQuery();
-                connection.Close();
+                cmd.Parameters.AddWithValue("@ProductID", id);
 
-            }
-            if (id > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
 
-        }
+                con.Open();
+                da.Fill(dt);
+                con.Close();
 
-
-        //Get Products by   product Id
-
-        public List<Product> GetProductByID(int ProductID)
-        {
-            List<Product> productsList = new List<Product>();
-
-            using (SqlConnection connection = new SqlConnection(conString))
-            {
-                SqlCommand command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "sp_GetProductByID";
-                command.Parameters.AddWithValue("@ProductID", ProductID);
-                SqlDataAdapter sqlDA = new SqlDataAdapter(command);
-                DataTable dtProducts = new DataTable();
-
-                connection.Open();
-                sqlDA.Fill(dtProducts);
-                connection.Close();
-
-                foreach (DataRow dr in dtProducts.Rows)
+                foreach (DataRow dr in dt.Rows)
                 {
-                    productsList.Add(new Product
+                    list.Add(new Product
                     {
                         ProductID = Convert.ToInt32(dr["ProductID"]),
                         ProductName = dr["ProductName"].ToString(),
                         Price = Convert.ToDecimal(dr["Price"]),
                         Qty = Convert.ToInt32(dr["Qty"]),
-                        Remarks = Convert.ToString(dr["Remarks"])
-
-
+                        Remarks = dr["Remarks"].ToString()
                     });
-
-
                 }
-
             }
-            return productsList;
+
+            return list;
         }
 
-        //Update Product
-        public bool UpdateProduct(Product product)
+        // =========================
+        // CRUD EXECUTOR
+        // =========================
+        public bool ExecuteProduct(Product product, string action)
         {
-            int i = 0;
-
-            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand command = new SqlCommand("sp_UpdateProducts", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@ProductID", product.ProductID);
-                command.Parameters.AddWithValue("@ProductName", product.ProductName);
-                command.Parameters.AddWithValue("@price", product.Price);
-                command.Parameters.AddWithValue("@Qty", product.Qty);
-                command.Parameters.AddWithValue("@Remarks", product.Remarks);
+                SqlCommand cmd = new SqlCommand("sp_ProductCRUD", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                connection.Open();
-                i = command.ExecuteNonQuery();
-                connection.Close();
+                cmd.Parameters.AddWithValue("@Action", action);
+                cmd.Parameters.AddWithValue("@ProductID", product.ProductID);
+                cmd.Parameters.AddWithValue("@ProductName", product.ProductName ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@Price", product.Price);
+                cmd.Parameters.AddWithValue("@Qty", product.Qty);
+                cmd.Parameters.AddWithValue("@Remarks", product.Remarks ?? (object)DBNull.Value);
 
+                con.Open();
+                int i = cmd.ExecuteNonQuery();
+                con.Close();
+
+                return i > 0;
             }
-            if (i > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        //Delete product
-
-        public string DeleteProduct(int productid)
-        {
-            string result = "";
-            using (SqlConnection connection = new SqlConnection(conString))
-            {
-
-                SqlCommand command = new SqlCommand("sp_DELETEPRODUCT", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@PRODUCTID", productid);
-                command.Parameters.Add("@OUTPUTMESSAGE", SqlDbType.VarChar,50).Direction = ParameterDirection.Output;
-                
-                connection.Open();
-                command.ExecuteNonQuery();
-                result = command.Parameters["@OUTPUTMESSAGE"].Value.ToString();
-                connection.Close();
-
-            }
-            return result;
-            
-
         }
     }
 }

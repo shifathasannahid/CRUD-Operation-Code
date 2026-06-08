@@ -16,7 +16,7 @@
     <script>
         setTimeout(function () {
          document.getElementById("infoAlert").style.display = "none";
-          }, 5000);
+          }, 4000);
     </script>
 
 }
@@ -57,9 +57,13 @@
             @Html.DisplayFor(model => model.Remarks)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="ProductID" />
+
+        <button type="submit" class="btn btn-danger">Delete</button> |
+        
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
     </form>
 </div>
