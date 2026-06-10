@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
 using ADO_Examples.Data;
+using Microsoft.AspNetCore.Mvc;
 using ADO_Examples.Models;
 
 namespace ADO_Examples.Controllers
@@ -7,111 +8,181 @@ namespace ADO_Examples.Controllers
     public class ProductController : Controller
     {
         Product_DAL _productDAL = new Product_DAL();
-
        
-        // INDEX
-      
+        
+        // GET: ProductController
         public ActionResult Index()
         {
-            var list = _productDAL.GetProducts();
-
-            if (list.Count == 0)
-                TempData["InfoMessage"] = "No products found";
-
-            return View(list);
+            var productList = _productDAL.GetProducts();
+           if(productList.Count == 0)
+            {
+                TempData["InfoMessage"] = "Curreently product not available in the Database.";
+            }
+            
+            return View(productList);
         }
 
-       
-        // DETAILS
-        
+        // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            var product = _productDAL.GetProductByID(id).FirstOrDefault();
-
-            if (product == null)
+            try
             {
-                TempData["InfoMessage"] = "Product not found";
-                return RedirectToAction("Index");
+                var product = _productDAL.GetProductByID(id).FirstOrDefault();
+                if (product == null)
+                {
+                    TempData["InfoMessage"] = "Product not available in ID " + id.ToString();
+                    return RedirectToAction("Index");
+                }
+                return View(product);
             }
+            catch (Exception ex)
+            {
 
-            return View(product);
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+
+            }
         }
 
-       
-        // CREATE
-       
+        // GET: ProductController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Create(Product product)
+        // POST: ProductController/Create
+        [HttpPost, ActionName("Create")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection, Product product)
         {
-            bool result = _productDAL.ExecuteProduct(product, "INSERT");
+            bool IsInserted = false;
 
-            if (result)
-                TempData["SuccessMessage"] = "Inserted successfully";
-            else
-                TempData["ErrorMessage"] = "Insert failed or duplicate";
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    IsInserted = _productDAL.ExecuteProduct(product, "INSERT");
 
-            return RedirectToAction("Index");
+                    if (IsInserted)
+                    {
+                        TempData["SuccessMessage"] = "Product Insert saved Successfully....!";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Product is already available / Unable to save the product detail";
+                    }
+
+
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+
+            }
         }
 
-        // EDIT
-       
+        // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
-            var product = _productDAL.GetProductByID(id).FirstOrDefault();
-
-            return View(product);
+            var products = _productDAL.GetProductByID(id).FirstOrDefault();
+            if (products == null)
+            {
+                TempData["InfoMessage"] = "Product not available in ID " + id.ToString();
+                return RedirectToAction("Index");
+            }
+            return View(products);
         }
 
-        [HttpPost]
-        public ActionResult Edit(Product product)
+        // POST: ProductController/Edit/5
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateProduct(Product product)
         {
-            bool result = _productDAL.ExecuteProduct(product, "UPDATE");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool IsUpdated = _productDAL.ExecuteProduct(product, "UPDATE");
 
-            if (result)
-                TempData["SuccessMessage"] = "Updated successfully";
-            else
-                TempData["ErrorMessage"] = "Update failed";
+                    if (IsUpdated)
+                    {
+                        TempData["SuccessMessage"] = "Product details Update Successfully....!";
+                    }
 
-            return RedirectToAction("Index");
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Product is already available / Unable to update the product detail";
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+
+            }
+
+
         }
 
-        
-        // DELETE (GET)
-        
+        // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
-            var product = _productDAL.GetProductByID(id).FirstOrDefault();
-
-            return View(product);
-        }
-
-        
-        // DELETE (POST)
-      
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int ProductID)
-        {
-            System.Diagnostics.Debug.WriteLine("DELETE ID = " + ProductID);
-
-            Product p = new Product
+            try
             {
-                ProductID = ProductID
-            };
+                var product = _productDAL.GetProductByID(id).FirstOrDefault();
+                if (product == null)
+                {
+                    TempData["InfoMessage"] = "Product not available in ID " + id.ToString();
+                    return RedirectToAction("Index");
 
-            bool result = _productDAL.ExecuteProduct(p, "DELETE");
+                }
+                return View(product);
+            }
+            catch (Exception ex)
+            {
 
-            if (result)
-                TempData["SuccessMessage"] = "Deleted successfully!";
-            else
-                TempData["ErrorMessage"] = "Delete failed!";
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
 
-            return RedirectToAction("Index");
+            }
         }
+
+        // POST: ProductController/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmation(int ProductID)
+        {
+            try
+            {
+                Product product = new Product();
+                product.ProductID = ProductID;
+
+                bool result = _productDAL.ExecuteProduct(product, "DELETE");
+
+                if (result)
+                {
+                    TempData["SuccessMessage"] = "Product deleted successfully!";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Delete failed!";
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+            }
+        }
+
     }
 }
