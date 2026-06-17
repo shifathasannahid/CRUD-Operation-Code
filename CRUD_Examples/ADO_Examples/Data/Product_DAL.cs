@@ -8,7 +8,7 @@ namespace ADO_Examples.Data
 {
     public class Product_DAL
     {
-        string conString = @"Data Source=DESKTOP-5BNTOH9\SQLEXPRESS;Initial Catalog=ADO_EXAMPLE;Integrated Security=SSPI;Encrypt=True;TrustServerCertificate=True";
+        string conString = @"Data Source=DESKTOP-Q8CQ2U1\SQLEXPRESS;Initial Catalog=ADO_EXAMPLE;Integrated Security=SSPI;Encrypt=True;TrustServerCertificate=True";
 
         // =========================
         // GET ALL PRODUCTS
